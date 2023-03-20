@@ -35,7 +35,8 @@ jobs:
       uses: docker/build-push-action@v4.0.0
       with:
         push: true
-        tags: |
+        context: dockerfiles/alpine/Dockerfile
+        tags: |        
           ${{env.DOCKERHUB_ORG}}/${{env.IMAGE}}:latest
           ${{env.DOCKERHUB_ORG}}/${{env.IMAGE}}:${{github.sha}}
           ghcr.io/${{ github.repository }}:latest
