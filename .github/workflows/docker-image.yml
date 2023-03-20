@@ -1,0 +1,45 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+env:
+  DOCKERHUB_ORG: elpaasoci
+
+jobs:
+
+  build_and_publish:
+    name: build and publish
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    -
+      name: Login to DockerHub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_PASSWORD }}
+    -
+      name: Login to GitHub Container Registry
+      uses: docker/login-action@v2
+      with:
+        registry: ghcr.io
+        username: ${{ github.repository_owner }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    -
+      name: publish curl-ssl image
+      uses: docker/build-push-action@v4.0.0
+      with:
+        push: true
+        tags: |
+          ${{env.DOCKERHUB_ORG}}/${{env.IMAGE}}:latest
+          ${{env.DOCKERHUB_ORG}}/${{env.IMAGE}}:${{github.sha}}
+          ghcr.io/${{ github.repository }}:latest
+          ghcr.io/${{ github.repository }}:${{github.sha}}
+      env:
+        IMAGE: concourse-pipeline-resource
+
