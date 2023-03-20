@@ -31,11 +31,16 @@ jobs:
         username: ${{ github.repository_owner }}
         password: ${{ secrets.GITHUB_TOKEN }}
     -
-      name: publish curl-ssl image
+      # Setting up Docker Buildx with docker-container driver is required
+      # at the moment to be able to use a subdirectory with Git context
+      name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+    -
+      name: publish concourse-pipeline-resource image
       uses: docker/build-push-action@v4.0.0
       with:
         push: true
-        context: dockerfiles/alpine/Dockerfile
+        context: "{{defaultContext}}:dockerfiles/alpine/Dockerfile"
         tags: |        
           ${{env.DOCKERHUB_ORG}}/${{env.IMAGE}}:latest
           ${{env.DOCKERHUB_ORG}}/${{env.IMAGE}}:${{github.sha}}
