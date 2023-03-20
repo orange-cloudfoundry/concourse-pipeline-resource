@@ -40,7 +40,7 @@ jobs:
       uses: docker/build-push-action@v4.0.0
       with:
         push: true
-        context: ./dockerfiles/alpine
+        file: ./dockerfiles/alpine/Dockerfile
         tags: |        
           ${{env.DOCKERHUB_ORG}}/${{env.IMAGE}}:latest
           ${{env.DOCKERHUB_ORG}}/${{env.IMAGE}}:${{github.sha}}
