@@ -4,14 +4,13 @@ on:
   push:
     branches: [ "master" ]
     tags:
-      - "v[0-9]+.[0-9]+.[0-9]+*"
+      - "[0-9]+.[0-9]+.[0-9]+*"
   pull_request:
     branches: [ "master" ]
 env:
   DOCKERHUB_ORG: elpaasoci
 
 jobs:
-
   build_and_publish:
     name: build and publish
     runs-on: ubuntu-latest
