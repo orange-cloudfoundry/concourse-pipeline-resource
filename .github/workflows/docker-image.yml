@@ -9,6 +9,7 @@ on:
     branches: [ "master" ]
 env:
   DOCKERHUB_ORG: elpaasoci
+  OCI_IMAGE: concourse-pipeline-resource
 
 jobs:
   build_and_publish:
@@ -42,12 +43,10 @@ jobs:
         push: true
         file: ./dockerfiles/alpine/Dockerfile
         tags: |        
-          ${{env.DOCKERHUB_ORG}}/${{env.IMAGE}}:latest
-          ${{env.DOCKERHUB_ORG}}/${{env.IMAGE}}:${{github.sha}}
+          ${{env.DOCKERHUB_ORG}}/${{env.OCI_IMAGE}}:latest
+          ${{env.DOCKERHUB_ORG}}/${{env.OCI_IMAGE}}:${{github.sha}}
           ghcr.io/${{ github.repository }}:latest
           ghcr.io/${{ github.repository }}:${{github.sha}}
-      env:
-        IMAGE: concourse-pipeline-resource
     -
       name: publish concourse-pipeline-resource tagged image
       if: github.ref_type == 'tag'
@@ -56,8 +55,7 @@ jobs:
         push: true
         file: ./dockerfiles/alpine/Dockerfile
         tags: |
-          ${{env.DOCKERHUB_ORG}}/${{env.IMAGE}}:${{github.ref_name}}
+          ${{env.DOCKERHUB_ORG}}/${{env.OCI_IMAGE}}:${{github.ref_name}}
           ghcr.io/${{ github.repository }}:${{github.ref_name}}
-      env:
-        IMAGE: concourse-pipeline-resource
+        
 
