@@ -17,7 +17,7 @@ resource_types:
 - name: concourse-pipeline
   type: docker-image
   source:
-    repository: concourse/concourse-pipeline-resource
+    repository: elpaasoci/concourse-pipeline-resource
 ```
 
 See [concourse docs](https://concourse-ci.org/resource-types.html) for more details
