@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 env:
-  DOCKER_FILE_PATH: dockerfiles/alpine
+  DOCKER_FILE_PATH: ./dockerfiles/alpine/Dockerfile
   IMAGE: "ghcr.io/${{ github.repository }}"
   DOCKERHUB_ORG: elpaasoci
 
@@ -46,7 +46,7 @@ jobs:
       name: publish concourse-pipeline-resource standard image
       uses: docker/build-push-action@v5.1.0
       with:
-        context: ${{env.DOCKER_FILE_PATH}}
+        file: ${{env.DOCKER_FILE_PATH}}
         push: true
         tags: |
           ${{env.DOCKERHUB_ORG}}/${{env.OCI_IMAGE}}:latest
@@ -59,7 +59,7 @@ jobs:
       uses: docker/build-push-action@v5.1.0
       with:
         push: true
-        context: ${{ env.DOCKER_FILE_PATH }}
+        file: ${{ env.DOCKER_FILE_PATH }}
         tags: |
           ${{env.DOCKERHUB_ORG}}/${{env.OCI_IMAGE}}:${{github.ref_name}}
           ${{env.IMAGE}}:${{github.ref_name}}
