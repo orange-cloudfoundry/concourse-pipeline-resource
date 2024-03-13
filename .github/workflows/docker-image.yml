@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 env:
-  DOCKER_FILE_PATH: ./dockerfiles/alpine/Dockerfile
+  DOCKER_FILE_PATH: dockerfiles/alpine
   IMAGE: "ghcr.io/${{ github.repository }}"
   DOCKERHUB_ORG: elpaasoci
 
